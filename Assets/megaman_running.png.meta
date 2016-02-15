@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 645759e1d0f7e4a4f8b34a81ea87ec1c
-timeCreated: 1455565467
+timeCreated: 1455569346
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -122,60 +122,60 @@ TextureImporter:
     - name: megaman_running_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 300
-        width: 50
-        height: 50
+        x: 8
+        y: 313
+        width: 21
+        height: 24
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: megaman_running_1
       rect:
         serializedVersion: 2
-        x: 50
-        y: 300
-        width: 50
-        height: 50
+        x: 58
+        y: 313
+        width: 21
+        height: 24
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: megaman_running_2
       rect:
         serializedVersion: 2
-        x: 100
-        y: 300
-        width: 50
-        height: 50
+        x: 109
+        y: 313
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: megaman_running_3
       rect:
         serializedVersion: 2
-        x: 150
-        y: 300
-        width: 50
-        height: 50
+        x: 156
+        y: 313
+        width: 24
+        height: 22
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: megaman_running_4
       rect:
         serializedVersion: 2
-        x: 200
-        y: 300
-        width: 50
-        height: 50
+        x: 208
+        y: 313
+        width: 17
+        height: 24
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: megaman_running_5
       rect:
         serializedVersion: 2
-        x: 250
-        y: 300
-        width: 50
-        height: 50
+        x: 255
+        y: 313
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
