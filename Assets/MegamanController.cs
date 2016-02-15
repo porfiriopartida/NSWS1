@@ -5,7 +5,10 @@ public class MegamanController : MonoBehaviour {
 	public Animator MyAnimator;
 	public Rigidbody2D MyRigidbody;
 	public float MovementSpeed = 1f;
-	public float JumpForce = 10f;
+	public float JumpForce = 10f;                 // Whether or not a player can steer while jumping;
+	[SerializeField] private LayerMask WhatIsGround;
+	[SerializeField] private Transform GroundCheck; 
+	float groundCheckRadius = 0.02f;
 	// Use this for initialization
 	void Start () {
 		MyAnimator = GetComponent<Animator>();
@@ -42,6 +45,7 @@ public class MegamanController : MonoBehaviour {
 			MyRigidbody.AddForce(new Vector2(0, JumpForce));
 			isGrounded = false;
 		}
+		isGrounded = Physics2D.OverlapCircle (GroundCheck.position, groundCheckRadius, WhatIsGround);
 		
 		MyAnimator.SetBool("isGrounded", isGrounded);
 		MyAnimator.SetBool("isRunning", isHorizontal);
