@@ -9,10 +9,11 @@ public class MegamanController : MonoBehaviour {
 	public float JumpForce = 10f;                 // Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask WhatIsGround;
 	[SerializeField] private Transform GroundCheck; 
-	float groundCheckRadius = 0.02f;
-	public Text score;
+	float groundCheckRadius = 0.12f;
+	public Text scoreText;
 	public Slider healthBar;
 	private int currentHP = 100;
+	private int score = 0;
 	BoxCollider2D MyCollider;
 	// Use this for initialization
 	void Start () {
@@ -54,8 +55,9 @@ public class MegamanController : MonoBehaviour {
 			isGrounded = false;
 		}
 		isGrounded = Physics2D.OverlapCircle (GroundCheck.position, groundCheckRadius, WhatIsGround);
-
+		
 		healthBar.value = currentHP;
+		scoreText.text = "Score: " + score;
 		MyAnimator.SetBool("isGrounded", isGrounded);
 		MyAnimator.SetBool("isRunning", isHorizontal);
 		MyAnimator.SetBool("isShooting", isShooting);
@@ -64,7 +66,8 @@ public class MegamanController : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		//Destroy(this.transform.parent.gameObject);
+		//print (other.transform.ToString());
+		this.score++;
 	}
 
 	void switchSide(){
