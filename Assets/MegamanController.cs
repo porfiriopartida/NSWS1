@@ -10,8 +10,8 @@ public class MegamanController : MonoBehaviour {
 	[SerializeField] private LayerMask WhatIsGround;
 	[SerializeField] private Transform GroundCheck; 
 	float groundCheckRadius = 0.12f;
-	public Text scoreText;
-	public Slider healthBar;
+	//public Text scoreText;
+	//public Slider healthBar;
 	private int currentHP = 100;
 	private int score = 0;
 	BoxCollider2D MyCollider;
@@ -56,8 +56,8 @@ public class MegamanController : MonoBehaviour {
 		}
 		isGrounded = Physics2D.OverlapCircle (GroundCheck.position, groundCheckRadius, WhatIsGround);
 		
-		healthBar.value = currentHP;
-		scoreText.text = "Score: " + score;
+		//healthBar.value = currentHP;
+		//scoreText.text = "Score: " + score;
 		MyAnimator.SetBool("isGrounded", isGrounded);
 		MyAnimator.SetBool("isRunning", isHorizontal);
 		MyAnimator.SetBool("isShooting", isShooting);
