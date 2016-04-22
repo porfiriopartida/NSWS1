@@ -9,6 +9,8 @@ public class PlayerShooting : MonoBehaviour {
 	float timer;                                    // A timer to determine when to fire.
 	AudioSource gunAudio;                           // Reference to the audio source.
 	public float bulletForce = 20f;
+	[SerializeField] public GameObject bulletBill;
+
 	void Awake ()
 	{
 		// Create a layer mask for the Shootable layer.
@@ -18,7 +20,9 @@ public class PlayerShooting : MonoBehaviour {
 		gunAudio = GetComponent<AudioSource> ();
 	}
 	void loadPrefabs(){
+		//bulletBill = (GameObject)Instantiate (Resources.Load ("Bullet"));
 	}
+
 	
 	void Update ()
 	{
@@ -35,7 +39,8 @@ public class PlayerShooting : MonoBehaviour {
 		}
 	}
 	GameObject getBullet(){
-		GameObject clonedBullet = Instantiate ((GameObject)Instantiate (Resources.Load ("Bullet")), transform.position, transform.rotation) as GameObject;
+		//GameObject clonedBullet = Instantiate ((GameObject)Instantiate (Resources.Load ("Bullet")), transform.position, transform.rotation) as GameObject;
+		GameObject clonedBullet = Instantiate (bulletBill, transform.position, transform.rotation) as GameObject;
 		return clonedBullet;
 	}
 
