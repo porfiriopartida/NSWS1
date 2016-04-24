@@ -74,4 +74,7 @@ public class MegamanController : MonoBehaviour {
 		facingRight = !facingRight;
 		transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, 1);
 	}
+	public bool isFacingRight(){
+		return this.facingRight;
+	}
 }
