@@ -3,10 +3,13 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour 
 {
-	public Transform target;		//target for the camera to follow
+	private Transform target;		//target for the camera to follow
 	public float xOffset;			//how much x-axis space should be between the camera and target
 	public bool followY;			//how much x-axis space should be between the camera and target
 
+	void Start(){
+		target = GameObject.FindGameObjectWithTag("Player").transform;
+	}
 
 	void Update()
 	{

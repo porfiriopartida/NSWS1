@@ -12,7 +12,8 @@ public class PlayerShooting : MonoBehaviour {
 	[SerializeField] public GameObject bulletBill;
 	MegamanController playerController;
 	void Start(){
-		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<MegamanController>();
+		//playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<MegamanController>();
+		playerController = this.transform.parent.gameObject.GetComponent<MegamanController>();
 	}
 
 	void Awake ()
@@ -50,6 +51,8 @@ public class PlayerShooting : MonoBehaviour {
 		//print ("Facing right: " + playerController.isFacingRight().ToString());
 		//print ("Side: " + side);
 		clonedBullet.transform.localScale = new Vector3 ( bulletScale.x * (side), bulletScale.y, 1);
+		//Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
+		//rigidBody.AddForce(new Vector2(10 * side, 10f));
 		//transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, 1);
 		return clonedBullet;
 	}
