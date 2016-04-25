@@ -10,8 +10,8 @@ public class MegamanController : MonoBehaviour {
 	[SerializeField] private LayerMask WhatIsGround;
 	[SerializeField] private Transform GroundCheck; 
 	float groundCheckRadius = 0.12f;
-	//public Text scoreText;
-	//public Slider healthBar;
+	private Text scoreText;
+	private Slider healthBar;
 	private int currentHP = 100;
 	private int score = 0;
 	BoxCollider2D MyCollider;
@@ -20,6 +20,8 @@ public class MegamanController : MonoBehaviour {
 		MyAnimator = GetComponent<Animator>();
 		MyRigidbody = GetComponent<Rigidbody2D>();
 		MyCollider =  GetComponent<BoxCollider2D>();
+		scoreText = GameObject.FindGameObjectWithTag ("HUD_SCORE").GetComponent<Text>();
+		healthBar = GameObject.FindGameObjectWithTag ("HUD_HEALTH_BAR").GetComponent<Slider>();
 	}
 	bool facingRight = true;
 	bool isGrounded = true;
@@ -56,18 +58,25 @@ public class MegamanController : MonoBehaviour {
 		}
 		isGrounded = Physics2D.OverlapCircle (GroundCheck.position, groundCheckRadius, WhatIsGround);
 		
-		//healthBar.value = currentHP;
-		//scoreText.text = "Score: " + score;
+		if(healthBar != null){
+			healthBar.value = currentHP;
+		}
+		if(scoreText != null){
+			scoreText.text = "Score: " + score;
+		}
 		MyAnimator.SetBool("isGrounded", isGrounded);
 		MyAnimator.SetBool("isRunning", isHorizontal);
 		MyAnimator.SetBool("isShooting", isShooting);
 		MyAnimator.SetBool("isDashing", isDashing);
 	}
 	
-	void OnTriggerEnter2D(Collider2D other)
-	{
+	//void OnTriggerEnter2D(Collider2D other)
+	//{
 		//print (other.transform.ToString());
-		this.score++;
+		//this.score++;
+	//}
+	public void addScore(int v){
+		this.score += 1;
 	}
 
 	void switchSide(){

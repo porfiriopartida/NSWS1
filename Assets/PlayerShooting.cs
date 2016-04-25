@@ -8,7 +8,7 @@ public class PlayerShooting : MonoBehaviour {
 	private float timeBetweenBullets = 0.15f;        // The time between each shot.
 	float timer;                                    // A timer to determine when to fire.
 	AudioSource gunAudio;                           // Reference to the audio source.
-	public float bulletForce = 20f;
+	public float bulletForce = 200f;
 	[SerializeField] public GameObject bulletBill;
 	MegamanController playerController;
 	void Start(){
@@ -46,14 +46,6 @@ public class PlayerShooting : MonoBehaviour {
 	GameObject getBullet(){
 		//GameObject clonedBullet = Instantiate ((GameObject)Instantiate (Resources.Load ("Bullet")), transform.position, transform.rotation) as GameObject;
 		GameObject clonedBullet = Instantiate (bulletBill, transform.position, transform.rotation) as GameObject;
-		Vector3 bulletScale = clonedBullet.transform.localScale;
-		int side = playerController.isFacingRight() ? -1 : 1;
-		//print ("Facing right: " + playerController.isFacingRight().ToString());
-		//print ("Side: " + side);
-		clonedBullet.transform.localScale = new Vector3 ( bulletScale.x * (side), bulletScale.y, 1);
-		//Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
-		//rigidBody.AddForce(new Vector2(10 * side, 10f));
-		//transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, 1);
 		return clonedBullet;
 	}
 
@@ -67,6 +59,12 @@ public class PlayerShooting : MonoBehaviour {
 
 		GameObject clonedBullet = getBullet ();
 		Rigidbody2D body = clonedBullet.GetComponent<Rigidbody2D>();
-		body.AddForce (new Vector2(bulletForce, 0));
+		Vector3 bulletScale = clonedBullet.transform.localScale;
+		int side = playerController.isFacingRight() ? -1 : 1;
+		//print ("Facing right: " + playerController.isFacingRight().ToString());
+		//print ("Side: " + side);
+		clonedBullet.transform.localScale = new Vector3 ( bulletScale.x * (side), bulletScale.y, 1);
+		//transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, 1);
+		body.AddForce (new Vector2(bulletForce * -side, 0));
 	}
 }
