@@ -15,6 +15,7 @@ public class MegamanController : MonoBehaviour {
 	private int currentHP = 100;
 	private int score = 0;
 	BoxCollider2D MyCollider;
+	AudioSource jumpAudio;   
 	// Use this for initialization
 	void Start () {
 		MyAnimator = GetComponent<Animator>();
@@ -22,6 +23,8 @@ public class MegamanController : MonoBehaviour {
 		MyCollider =  GetComponent<BoxCollider2D>();
 		scoreText = GameObject.FindGameObjectWithTag ("HUD_SCORE").GetComponent<Text>();
 		healthBar = GameObject.FindGameObjectWithTag ("HUD_HEALTH_BAR").GetComponent<Slider>();
+
+		jumpAudio = GetComponent<AudioSource> ();
 	}
 	bool facingRight = true;
 	bool isGrounded = true;
@@ -53,6 +56,7 @@ public class MegamanController : MonoBehaviour {
 		}
 
 		if(isGrounded && isJump){
+			jumpAudio.Play ();
 			MyRigidbody.AddForce(new Vector2(0, JumpForce));
 			isGrounded = false;
 		}
@@ -64,6 +68,7 @@ public class MegamanController : MonoBehaviour {
 		if(scoreText != null){
 			scoreText.text = "Score: " + score;
 		}
+		//
 		MyAnimator.SetBool("isGrounded", isGrounded);
 		MyAnimator.SetBool("isRunning", isHorizontal);
 		MyAnimator.SetBool("isShooting", isShooting);
