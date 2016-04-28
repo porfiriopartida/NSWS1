@@ -7,6 +7,7 @@ TagManager:
   - HUD_SCORE
   - HUD_HEALTH_BAR
   - NPC_ENEMY
+  - START_POINT
   layers:
   - Default
   - TransparentFX

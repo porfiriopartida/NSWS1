@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21281510}
   - 50: {fileID: 5052084}
   - 58: {fileID: 5861568}
+  - 58: {fileID: 5878800}
   m_Layer: 12
   m_Name: EnemyIdleSprite_0
   m_TagString: NPC_ENEMY
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 138058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.460000008, y: -.75999999, z: 0}
+  m_LocalPosition: {x: 2.50601196, y: -.139222801, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -58,7 +59,20 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: .119999997, y: 0}
   serializedVersion: 2
-  m_Radius: .32408452
+  m_Radius: .269802302
+--- !u!58 &5878800
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138058}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: .119999997, y: 0}
+  serializedVersion: 2
+  m_Radius: .342178613
 --- !u!212 &21281510
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -91,7 +105,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Radius
+      value: .342178613
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 138058}

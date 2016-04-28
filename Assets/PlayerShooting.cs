@@ -37,9 +37,10 @@ public class PlayerShooting : MonoBehaviour {
 		//print ("timeBetweenBullets " + timeBetweenBullets);
 		
 		// If the Fire1 button is being press and it's time to fire...
-		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets)
+		if(playerController.getCanShoot() && Input.GetButton ("Fire1") && timer >= timeBetweenBullets)
 		{
 			// ... shoot the gun.
+			playerController.shooting();
 			Shoot ();
 		}
 	}
