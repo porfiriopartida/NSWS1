@@ -25,16 +25,31 @@ public class MegamanController : MonoBehaviour {
 		MyAnimator = GetComponent<Animator>();
 		MyRigidbody = GetComponent<Rigidbody2D>();
 		MyCollider =  GetComponent<BoxCollider2D>();
-		scoreText = GameObject.FindGameObjectWithTag ("HUD_SCORE").GetComponent<Text>();
-		healthBar = GameObject.FindGameObjectWithTag ("HUD_HEALTH_BAR").GetComponent<Slider>();
+		GameObject dummy;
+		dummy = GameObject.FindGameObjectWithTag ("HUD_SCORE");
+		if (dummy != null) {
+			scoreText = dummy.GetComponent<Text>();
+		}
+		dummy = GameObject.FindGameObjectWithTag ("HUD_HEALTH_BAR");
+		if (dummy != null) {
+			healthBar = dummy.GetComponent<Slider>();
+		}
 		
 		audioSources = GetComponents<AudioSource> ();
 		jumpAudio = audioSources [0];
 		explosionAudio = audioSources [1];
 
 		
-		origin = GameObject.FindGameObjectWithTag ("START_POINT").transform;
+		dummy = GameObject.FindGameObjectWithTag ("START_POINT");
+		if (dummy != null) {
+			origin = dummy.transform;
+		}
 		cameraFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+
+
+		score = PlayerPrefs.GetInt("score", 0);
+		currentHP = PlayerPrefs.GetInt("currentHP", 100);
+
 		revive ();
 	}
 	public void die(bool falling){
@@ -48,7 +63,9 @@ public class MegamanController : MonoBehaviour {
 			MyRigidbody.isKinematic = true;
 			playSound (explosionAudio);
 		} else {
-			cameraFollow.followY = false;
+			if(cameraFollow != null){
+				cameraFollow.followY = false;
+			}
 			StartCoroutine(lateDying());
 		}
 	}
@@ -65,12 +82,18 @@ public class MegamanController : MonoBehaviour {
 		canBeDamaged = true;
 		canShoot = true;
 		currentHP = 100;
-		transform.position = origin.position;
+		if (origin != null) {
+			transform.position = origin.position;
+		} else {
+			transform.position = new Vector3(0, 0, 0);
+		}
 		MyRigidbody.isKinematic = false;
 		//die.
 		MyAnimator.SetBool("isDamaged", false);
 		MyAnimator.SetBool ("isDying", false);
-		cameraFollow.followY = true;
+		if(cameraFollow != null){
+			cameraFollow.followY = true;
+		}
 		isAlive = true;
 	}
 	bool facingRight = true;
@@ -146,6 +169,11 @@ public class MegamanController : MonoBehaviour {
 		if(obj){
 			string tag = obj.tag;
 			print ("Collide with: " + tag);
+			
+			if(tag.Equals("FLAG")){
+				win();
+				return;
+			}
 			if(canBeDamaged){
 				if(tag.Equals("NPC_ENEMY")){
 					addDamage(40);
@@ -166,24 +194,23 @@ public class MegamanController : MonoBehaviour {
 					addDamage(10);
 					Destroy(obj);
 				}
-			}else if(tag.Equals("FLAG")){
-				win();
 			}
 		}
 		
 	}
 	public void win(){
+		PlayerPrefs.SetInt("score", score);
+		PlayerPrefs.SetInt("currentHP", currentHP);
+
 		loadNextScene ();
 	}
 	
 	public void loadNextScene()
 	{
-		//float fadeTime = GameObject.Find ("scene2Choose").GetComponent<fading>().BeginFade(1);
-		//yield return new WaitForSeconds(fadeTime);
 		int currentLv = PlayerPrefs.GetInt("Current", 1);
 		currentLv++;
 		
-		if (currentLv > 4)
+		if (currentLv > 2)
 		{ // Update if adding more levels.
 			currentLv = 1;
 		}
@@ -215,6 +242,7 @@ public class MegamanController : MonoBehaviour {
 		this.currentHP -= dmg;
 		if (currentHP < 0) {
 			currentHP = 0;
+			die();
 		} else {
 			StartCoroutine(Blink(2.0F));
 			MyAnimator.SetBool("isDamaged", true);
