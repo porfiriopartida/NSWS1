@@ -9,8 +9,6 @@ public class CameraFollow : MonoBehaviour
 
 	void Start(){
 		target = GameObject.FindGameObjectWithTag("Player").transform;
-		print ("X: " + target.position.x);
-		print ("Y: " + target.position.y);
 	}
 
 	void Update()

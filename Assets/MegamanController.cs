@@ -19,6 +19,7 @@ public class MegamanController : MonoBehaviour {
 	AudioSource jumpAudio;
 	AudioSource explosionAudio;
 	Transform origin;
+	CameraFollow cameraFollow;
 	// Use this for initialization
 	void Start () {
 		MyAnimator = GetComponent<Animator>();
@@ -33,17 +34,31 @@ public class MegamanController : MonoBehaviour {
 
 		
 		origin = GameObject.FindGameObjectWithTag ("START_POINT").transform;
+		cameraFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
 		revive ();
 	}
+	public void die(bool falling){
+		isAlive = false;
+		if (!falling) {
+			canMove = false;
+			canBeDamaged = false;
+			canShoot = false;
+			MyAnimator.SetBool ("isDamaged", false);
+			MyAnimator.SetBool ("isDying", true);
+			MyRigidbody.isKinematic = true;
+			playSound (explosionAudio);
+		} else {
+			cameraFollow.followY = false;
+			StartCoroutine(lateDying());
+		}
+	}
+	IEnumerator lateDying(){
+		yield return new WaitForSeconds(0.5f);
+		die ();
+	}
+
 	public void die(){
-		playSound (explosionAudio);
-		canMove = false;
-		canBeDamaged = false;
-		canShoot = false;
-		//die.
-		MyAnimator.SetBool("isDamaged", false);
-		MyAnimator.SetBool ("isDying", true);
-		MyRigidbody.isKinematic = true;
+		die (false);
 	}
 	public void revive(){
 		canMove = true;
@@ -55,10 +70,12 @@ public class MegamanController : MonoBehaviour {
 		//die.
 		MyAnimator.SetBool("isDamaged", false);
 		MyAnimator.SetBool ("isDying", false);
+		cameraFollow.followY = true;
+		isAlive = true;
 	}
 	bool facingRight = true;
 	bool isGrounded = true;
-	bool canMove = true, canBeDamaged = true, canShoot = true;
+	bool isAlive = true, canMove = true, canBeDamaged = true, canShoot = true;
 	float nextCanMove = 0;
 	// Update is called once per frame
 	void Update () {
@@ -104,8 +121,8 @@ public class MegamanController : MonoBehaviour {
 		MyAnimator.SetBool("isRunning", isHorizontal);
 		MyAnimator.SetBool("isShooting", isShooting);
 		MyAnimator.SetBool("isDashing", isDashing);
-		if(transform.position.y < -10){
-			die ();
+		if(isAlive && transform.position.y < -10){
+			die (true);
 		}
 	}
 	IEnumerator shootingDelay(float waitTime){
@@ -149,10 +166,31 @@ public class MegamanController : MonoBehaviour {
 					addDamage(10);
 					Destroy(obj);
 				}
+			}else if(tag.Equals("FLAG")){
+				win();
 			}
 		}
 		
 	}
+	public void win(){
+		loadNextScene ();
+	}
+	
+	public void loadNextScene()
+	{
+		//float fadeTime = GameObject.Find ("scene2Choose").GetComponent<fading>().BeginFade(1);
+		//yield return new WaitForSeconds(fadeTime);
+		int currentLv = PlayerPrefs.GetInt("Current", 1);
+		currentLv++;
+		
+		if (currentLv > 4)
+		{ // Update if adding more levels.
+			currentLv = 1;
+		}
+		PlayerPrefs.SetInt("Current", currentLv);
+		Application.LoadLevel("Level" + currentLv);
+	}
+	
 	void damageEnd(){
 		MyAnimator.SetBool("isDamaged", false);
 		//canBeDamaged = false;

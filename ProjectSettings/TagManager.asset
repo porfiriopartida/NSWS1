@@ -8,6 +8,7 @@ TagManager:
   - HUD_HEALTH_BAR
   - NPC_ENEMY
   - START_POINT
+  - FLAG
   layers:
   - Default
   - TransparentFX
